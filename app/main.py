@@ -6,12 +6,13 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 
+from app.api.router import api_router
 # 核心依赖（仅保留必要导入）
-from api.v1.endpoints.user_endpoints import user_router
-from core.config import settings
-from utils.logger import init_logger, log_info
+from app.api.v1.endpoints.user_endpoints import user_router
+from app.core.config import settings
+from app.utils.logger import init_logger, log_info
 # 修复：导入生命周期函数并接入
-from lifespan import app_lifespan
+from app.lifespan import app_lifespan
 
 # 1. 基础初始化（仅执行1次）
 init_logger()
@@ -36,6 +37,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # Trace ID中间件（简化实现）
 @app.middleware("http")
 async def trace_middleware(request: Request, call_next):
@@ -44,12 +46,13 @@ async def trace_middleware(request: Request, call_next):
     response.headers["X-Trace-ID"] = request.state.trace_id
     return response
 
+
 # 4. 注册路由（核心）
 # 修复点2：如果user_router内部已经带/api/v1前缀，这里只需要写/
 # 先检查user_endpoints.py中路由的前缀，再决定这里的prefix：
 # 情况1：user_router里的接口是@router.post("/users/") → 这里prefix="/api/v1"（正确）
 # 情况2：user_router里的接口是@router.post("/api/v1/users/") → 这里prefix="/"
-app.include_router(user_router, prefix="/api/v1", tags=["用户管理"])
+
 
 # 5. 健康检查接口（简化版）
 @app.get("/health", tags=["系统管理"])
@@ -67,6 +70,9 @@ async def health_check(request: Request):
             "redis": "connected" if settings.REDIS_URL else "disconnected"
         }
     }
+
+
+app.include_router(api_router, prefix="/api")
 
 # 6. 启动服务（简化逻辑）
 if __name__ == "__main__":

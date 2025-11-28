@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker
 )
 from app.core.config import settings
-from utils.logger import log_info, log_error, log_warn
+from app.utils.logger import log_info, log_error, log_warn
 
 # ------------------------------
 # 全局变量 + 异步锁（修复并发初始化问题）

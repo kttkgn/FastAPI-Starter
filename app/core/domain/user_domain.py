@@ -2,7 +2,7 @@ import re
 from dataclasses import dataclass, field
 from typing import Optional
 
-from core.domain.base_domain import BaseDomain  # 导入重命名后的基类
+from app.core.domain.base_domain import BaseDomain  # 导入重命名后的基类
 
 
 @dataclass(kw_only=True)

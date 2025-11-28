@@ -6,15 +6,15 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 # 导入基础设施依赖
-from adapters.cache.cache import async_redis_cache
-from adapters.db.session import AsyncSessionLocal, init_db
-from adapters.external.http_client import HttpClient
+from app.adapters.cache.cache import async_redis_cache
+from app.adapters.db.session import AsyncSessionLocal, init_db
+from app.adapters.external.http_client import HttpClient
 
 # 导入仓库和服务
 from app.adapters.db.repositories.base_repositories import BaseRepository
 from app.adapters.db.repositories.user_repositories import UserRepository
-from core.services.user_service import UserService
-from utils.logger import log_error, log_warn
+from app.core.services.user_service import UserService
+from app.utils.logger import log_error, log_warn
 
 # 类型变量（限制仓库类型）
 RepoType = TypeVar("RepoType", bound=BaseRepository)

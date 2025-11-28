@@ -5,18 +5,20 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, Path, Query
 
 # 项目内部导入
-from api.dependencies.dependencies import get_user_service
-from api.v1.schemas.user_schemas import (
+from app.api.dependencies.dependencies import get_user_service
+from app.api.v1.schemas.user_schemas import (
     UserResponse, UserCreateRequest, UserUpdateRequest, UserListResponse
 )
 from app.adapters.db.models.user import UserCreate, UserUpdate
-from core.schemas.base_response import BaseResponse
-from core.services.user_service import UserService
+from app.core.schemas.base_response import BaseResponse
+from app.core.services.user_service import UserService
 from passlib.context import CryptContext
+
+from app.utils.logger import log_info
 
 # ========== 基础配置 ==========
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
-user_router = APIRouter(prefix="/api/v1/users", tags=["用户管理"])
+user_router = APIRouter(tags=["用户管理"])
 
 
 # ========== 核心接口实现 ==========
@@ -34,6 +36,7 @@ async def create_user(
     # 请求模型转ORM模型（极简内联）
     req_dict = req.model_dump(exclude_none=True)
     req_dict["hashed_password"] = PWD_CONTEXT.hash(req_dict.pop("password"))
+    log_info(f"req_dict : {req_dict}")
     user_create = UserCreate(**req_dict)
 
     # 调用服务层

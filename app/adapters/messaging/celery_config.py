@@ -5,10 +5,10 @@ import asyncio
 import atexit
 from celery import Celery
 
-from adapters.cache.cache import async_redis_cache
+from app.adapters.cache.cache import async_redis_cache
 from app.core.config import settings  # 导入极简 Pydantic 配置
 
-from utils.logger import log_info, log_error
+from app.utils.logger import log_info, log_error
 
 # ------------------------------
 # 核心变量（极简，修复 IDE 提示）

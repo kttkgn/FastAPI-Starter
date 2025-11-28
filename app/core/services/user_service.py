@@ -7,7 +7,7 @@ from app.core.exceptions import (
     UserNotFoundError,
     InvalidUserUpdateError
 )
-from core.domain.user_domain import UserDomain
+from app.core.domain.user_domain import UserDomain
 
 
 class UserService:

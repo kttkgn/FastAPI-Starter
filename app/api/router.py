@@ -1,16 +1,8 @@
 from fastapi import APIRouter
 
-from app.api.v1.endpoints import user_endpoints
+from app.api.v1.endpoints.user_endpoints import user_router
 
 # 创建API路由
-api_router = APIRouter()
+api_router = APIRouter(prefix="/v1")
 
-# 包含v1版本端点
-api_router.include_router(xxx.router, prefix="/v1", tags=["examples"])
-
-# 根据需要添加更多版本的路由
-# api_router.include_router(
-#     v2.router,
-#     prefix="/v2",
-#     tags=["v2"]
-# )
+api_router.include_router(user_router, prefix="/user", tags=["用户管理"])

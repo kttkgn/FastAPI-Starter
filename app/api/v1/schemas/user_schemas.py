@@ -5,7 +5,7 @@ from datetime import datetime
 from typing import Optional, List
 from pydantic import BaseModel, EmailStr, Field
 
-from core.domain.user_domain import UserDomain
+from app.core.domain.user_domain import UserDomain
 
 
 # ========== 请求模型 ==========

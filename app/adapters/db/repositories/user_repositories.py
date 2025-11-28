@@ -4,7 +4,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from app.adapters.db.models.user import User, UserCreate, UserUpdate
 from app.adapters.db.repositories.base_repositories import BaseRepository
-from core.domain.user_domain import UserDomain
+from app.core.domain.user_domain import UserDomain
 
 
 class UserRepository(BaseRepository[User, UserCreate, UserUpdate]):

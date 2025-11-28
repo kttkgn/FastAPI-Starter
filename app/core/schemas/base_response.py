@@ -5,7 +5,7 @@ from typing import Optional, Generic, TypeVar
 from pydantic import BaseModel, Field
 
 # 导入枚举（依赖但解耦，枚举是纯数据，模型是逻辑）
-from core.enums.response_enums import ResponseCodeEnum
+from app.core.enums.response_enums import ResponseCodeEnum
 
 # 泛型类型变量（支持任意数据类型）
 DataT = TypeVar("DataT")

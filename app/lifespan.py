@@ -4,11 +4,11 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
-from adapters.messaging.celery_config import init_celery, shutdown_celery
-from utils.logger import log_info, log_warn
+from app.adapters.messaging.celery_config import init_celery, shutdown_celery
+from app.utils.logger import log_info, log_warn
 
 # 导入资源初始化/关闭函数
-from adapters.db.session import init_db, close_db_connection
+from app.adapters.db.session import init_db, close_db_connection
 
 
 # 生命周期初始化锁
