@@ -1,0 +1,80 @@
+# {{ project_name }}
+
+{{ project_description }}
+
+## Features
+
+- FastAPI with clean architecture
+- {% if use_database %}{{ database_type }} database integration{% endif %}
+- {% if use_redis %}Redis cache support{% endif %}
+- {% if messaging_type != "None" %}{{ messaging_type }} integration{% endif %}
+- {% if use_celery %}Celery for background tasks{% endif %}
+- {% if use_grpc %}gRPC support{% endif %}
+- {% if deploy_with_k8s %}Kubernetes deployment configuration{% endif %}
+- Comprehensive testing setup
+- CI/CD ready
+
+## Requirements
+
+- Python {{ python_version }}
+- {% if use_database %}{{ database_type }}{% endif %}
+- {% if use_redis %}Redis{% endif %}
+- {% if messaging_type != "None" %}{{ messaging_type }}{% endif %}
+- {% if use_celery %}Celery broker{% endif %}
+
+## Getting Started
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   make install
+   ```
+
+3. Configure environment variables:
+   ```bash
+   cp conf/dev.env .env
+   # Edit .env file with your configuration
+   ```
+
+4. Initialize the database:
+   ```bash
+   make init-db
+   ```
+
+### Running the Application
+
+```bash
+make run
+```
+
+### Running Tests
+
+```bash
+make test
+```
+
+## Project Structure
+
+```
+├── app                    # Application source code
+│   ├── api                # API layer
+│   ├── core               # Core business logic
+│   ├── adapters           # External dependencies adapters
+│   ├── jobs               # Background jobs
+│   ├── middleware         # Custom middleware
+│   └── utils              # Utility functions
+├── conf                   # Configuration templates
+├── scripts                # Helper scripts
+├── k8s                    # Kubernetes deployment
+└── test                   # Test suite
+```
+
+## License
+
+MIT License
+
+## Author
+
+{{ author_name }} - {{ author_email }}

@@ -1,0 +1,74 @@
+# Copier template configuration
+
+# Project metadata
+project_name:
+  type: str
+  help: "Project name (e.g., 'my-fastapi-project')"
+  default: "fastapi-project"
+
+project_description:
+  type: str
+  help: "Project description"
+  default: "A FastAPI project with clean architecture"
+
+author_name:
+  type: str
+  help: "Author name"
+  default: "Developer"
+
+author_email:
+  type: str
+  help: "Author email"
+  default: "developer@example.com"
+
+python_version:
+  type: str
+  help: "Python version"
+  default: "3.11"
+
+# Features
+database_type:
+  type: str
+  help: "Database type (PostgreSQL or MySQL)"
+  default: "PostgreSQL"
+  choices:
+    - PostgreSQL
+    - MySQL
+use_database:
+  type: bool
+  help: "Use database"
+  default: true
+
+use_redis:
+  type: bool
+  help: "Use Redis cache"
+  default: true
+
+messaging_type:
+  type: str
+  help: "Choose messaging queue implementation"
+  default: "None"
+  choices:
+    - None
+    - ZMQ
+    - RabbitMQ
+    - Kafka
+
+use_celery:
+  type: bool
+  help: "Use Celery for background tasks"
+  default: false
+
+use_grpc:
+  type: bool
+  help: "Use gRPC"
+  default: false
+
+# Deployment
+deploy_with_k8s:
+  type: bool
+  help: "Include Kubernetes deployment files"
+  default: true
+
+# Output directory
+_output_dir: "{{ project_name }}"

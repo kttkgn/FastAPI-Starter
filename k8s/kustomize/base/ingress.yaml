@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastapi-app
+  namespace: default
+  labels:
+    app: fastapi-app
+  annotations:
+    # Example annotations for NGINX ingress controller
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "60"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "60"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # Enable compression
+    nginx.ingress.kubernetes.io/gzip-comp-level: "5"
+    nginx.ingress.kubernetes.io/gzip-types: "application/json application/javascript text/css text/html text/plain text/xml application/xml"
+    # Health check configuration
+    nginx.ingress.kubernetes.io/health-check-path: "/health"
+    nginx.ingress.kubernetes.io/health-check-port: "8000"
+    # Rate limiting
+    nginx.ingress.kubernetes.io/rate-limiting-rps: "10"
+    nginx.ingress.kubernetes.io/rate-limiting-connections: "100"
+    # For cert-manager integration
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    # cert-manager.io/acme-challenge-type: "http01"
+spec:
+  # Optional: Specify ingressClassName for Kubernetes v1.19+
+  # ingressClassName: nginx
+  rules:
+  - host: api.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-app
+            port:
+              number: 80
+  - host: app.example.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: fastapi-app
+            port:
+              number: 80
+  # Optional: Default backend for unmatched paths
+  # defaultBackend:
+  #   service:
+  #     name: fastapi-app
+  #     port:
+  #       number: 80
+  # Optional: TLS configuration (requires cert-manager or manual certificate management)
+  # tls:
+  # - hosts:
+  #   - api.example.com
+  #   - app.example.com
+  #   secretName: fastapi-app-tls
+  # - hosts:
+  #   - *.example.com
+  #   secretName: wildcard-example-com-tls
